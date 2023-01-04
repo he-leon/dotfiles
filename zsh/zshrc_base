@@ -92,6 +92,7 @@ gcomm() {
 }
 alias gs="git status"
 alias gc="gcomm"
+alias ga="git add"
 alias gdiff="git diff"
 
 #------------------------------
