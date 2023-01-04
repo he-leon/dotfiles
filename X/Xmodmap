@@ -1,0 +1,6 @@
+
+keycode  44 = j J j J Down dead_abovedot
+keycode  45 = k K k K Up ampersand
+keycode  43 = h H h H Left Hstroke
+keycode  46 = l L l L Right Lstroke
+keycode  57 = n N n N F13 F13
