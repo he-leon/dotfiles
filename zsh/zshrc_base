@@ -82,11 +82,16 @@ alias sstatus="sudo systemctl status"
 alias senable="sudo systemctl enable"
 alias sdisable="sudo systemctl disable"
 alias sdisable="sudo systemctl disable"
-# git stuf
+# journalctl stuff
+alias jctl="journalctl -u "
+alias sjctl="sudo journalctl -u "
+# git stuff
 gcomm() {
         git commit -m "$1"
 }
-alias gstat="git status"
+alias gs="git status"
+alias gc="gcomm"
+alias gdiff="git diff"
 
 #------------------------------
 # Comp stuff
