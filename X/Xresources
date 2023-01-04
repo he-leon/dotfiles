@@ -1,0 +1,32 @@
+! xterm ----------------------------------------------------------------------
+xterm*background: #1E222A
+xterm*foreground: rgb:ba/bd/b6
+xterm*highlightColorMode: 0
+xterm*highlightReverse: 0
+xterm*highlightSelection: 1
+xterm*allowBoldFonts:       false
+xterm*locale: true
+xterm*utf8:               1
+xterm*eightBitInput:      true
+xterm*saveLines:          512
+xterm*scrollKey:          true
+xterm*scrollTtyOutput:    false
+xterm*scrollBar:          true
+xterm*rightScrollBar:     true
+xterm*jumpScroll:         true
+xterm*multiScroll:        true
+xterm*toolBar:            false
+xterm*selectToClipboard: true
+xterm.*backarrowKey: false
+xterm*metaSendsEscape: true
+xterm*faceName: DejaVuSansMono Nerd Font Mono
+xterm*faceSize: 9
+xterm*renderFont: true
+
+!-- Xft settings -- !
+Xft.dpi:        96
+Xft.antialias:  true
+Xft.rgba:       rgb
+Xft.hinting:    true
+Xft.hintstyle:  hintfull
+

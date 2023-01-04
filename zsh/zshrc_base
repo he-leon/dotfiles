@@ -1,0 +1,206 @@
+setopt autocd              # change directory just by typing its name
+#setopt correct            # auto correct mistakes
+setopt interactivecomments # allow comments in interactive mode
+setopt magicequalsubst     # enable filename expansion for arguments of the form ‘anything=expression’
+setopt nonomatch           # hide error message if there is no match for the pattern
+setopt notify              # report the status of background jobs immediately
+setopt numericglobsort     # sort filenames numerically when it makes sense
+setopt promptsubst         # enable command substitution in prompt
+
+fpath+=$HOME/.zsh/pure
+
+HISTFILE=~/.histfile
+HISTSIZE=10000
+SAVEHIST=10000
+
+
+
+#------------------------------
+# Variables
+#------------------------------
+export TERM=xterm-256color
+export EDITOR="vim"
+export PAGER="less"
+export PATH=${PATH}:$HOME/.local/bin
+
+#-----------------------------
+# Dircolors
+#-----------------------------
+LS_COLORS='di=01;94:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32:';
+export LS_COLORS
+
+#------------------------------
+# Keybindings
+#------------------------------
+bindkey -v
+bindkey 'jj' vi-cmd-mode
+exit_zsh() { exit }
+zle -N exit_zsh
+bindkey 'qq' exit_zsh
+bindkey -s 'vv' 'vim'
+typeset -g -A key
+bindkey "Ħ" backward-word
+bindkey "Ł" forward-word
+bindkey '\e[3~' delete-char
+bindkey '\e[1~' beginning-of-line
+bindkey '\e[4~' end-of-line
+bindkey '\e[2~' overwrite-mode
+bindkey "^H" backward-delete-char
+bindkey '^[[1~' beginning-of-line
+bindkey '^[[5~' up-line-or-history
+bindkey '^[[3~' delete-char
+bindkey '^[[4~' end-of-line
+bindkey '^[[6~' down-line-or-history
+bindkey '^[[D' backward-char
+bindkey '^[[C' forward-char
+bindkey '^R' history-incremental-search-backward
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[OA' history-beginning-search-backward
+bindkey '^[OB' history-beginning-search-forward
+
+## for rxvt
+bindkey "^[[F" end-of-line
+bindkey "^[[H" beginning-of-line
+## for gnome-terminal
+bindkey "\eOH" beginning-of-line
+bindkey "\eOF" end-of-line
+
+#------------------------------
+# Alias stuff
+#------------------------------
+alias v="TERM='' nvim"
+alias vim="TERM='' nvim"
+alias h="htop"
+alias ls="ls --color -F"
+alias ll="ls --color -lh"
+# systemctl stuff
+alias sstop="sudo systemctl stop"
+alias sstart="sudo systemctl start"
+alias srestart="sudo systemctl restart"
+alias sstatus="sudo systemctl status"
+alias senable="sudo systemctl enable"
+alias sdisable="sudo systemctl disable"
+alias sdisable="sudo systemctl disable"
+# git stuf
+gcomm() {
+        git commit -m "$1"
+}
+alias gstat="git status"
+
+#------------------------------
+# Comp stuff
+#------------------------------
+zmodload zsh/complist
+autoload -Uz compinit
+zstyle ':completion:*:*:*:*:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
+compinit -d ~/.cache/zcompdump
+zstyle :compinstall filename '${HOME}/.zshrc'
+
+zstyle ':completion:*:pacman:*' force-list always
+zstyle ':completion:*:*:pacman:*' menu yes select
+#
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+#
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*' force-list always
+#
+zstyle ':completion:*:*:killall:*' menu yes select
+zstyle ':completion:*:killall:*' force-list always
+
+
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt share_history
+
+#------------------------------
+# Window title
+#------------------------------
+case $TERM in
+    *xterm*|rxvt|rxvt-unicode|rxvt-256color|(dt|k|E)term)
+precmd () { print -Pn "\e]0;$TERM - (%L) [%n@%M]%# [%~]\a" }
+preexec () { print -Pn "\e]0;$TERM - (%L) [%n@%M]%# [%~] ($1)\a" }
+;;
+    screen)
+     precmd () {
+print -Pn "\e]83;title \"$1\"\a"
+print -Pn "\e]0;$TERM - (%L) [%n@%M]%# [%~]\a"
+}
+preexec () {
+print -Pn "\e]83;title \"$1\"\a"
+print -Pn "\e]0;$TERM - (%L) [%n@%M]%# [%~] ($1)\a"
+}
+;;
+esac
+
+#------------------------------
+# Prompt
+#------------------------------
+setprompt () {
+# load some modules
+autoload -U colors zsh/terminfo # Used in the colour alias below
+autoload -Uz vcs_info
+precmd() { vcs_info }
+# Format the vcs_info_msg_0_ variable
+zstyle ':vcs_info:git:*' formats '(%b)'
+
+colors
+setopt prompt_subst
+
+# make some aliases for the colours: (coud use normal escap.seq's too)
+for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
+eval PR_$color='%{$fg[${(L)color}]%}'
+done
+PR_NO_COLOR="%{$terminfo[sgr0]%}"
+
+
+# Check the UID
+if [[ $UID -ge 1000 ]]; then # normal user
+eval PR_USER='${PR_GREEN}%n${PR_NO_COLOR}'
+eval PR_USER_OP='${PR_GREEN}%#${PR_NO_COLOR}'
+elif [[ $UID -eq 0 ]]; then # root
+eval PR_USER='${PR_RED}%n${PR_NO_COLOR}'
+eval PR_USER_OP='${PR_RED}%#${PR_NO_COLOR}'
+fi
+
+# Check if we are on SSH or not
+if [[ -n "$SSH_CLIENT" || -n "$SSH2_CLIENT" ]]; then
+eval PR_HOST='${PR_YELLOW}%M${PR_NO_COLOR}' #SSH
+else
+eval PR_HOST='${PR_GREEN}%M${PR_NO_COLOR}' # no SSH
+fi
+# set the prompt
+
+#PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}][%~${PR_CYAN}]${PR_USER_OP} ${vcs_info_msg_0_}
+PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}] [%~${PR_CYAN}] ${PR_WHITE} ${vcs_info_msg_0_}
+> '
+#PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}]${PR_USER_OP} ${vcs_info_msg_0_}[%~${PR_CYAN}]'
+#PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}][\x1b[34;1m%~${PR_CYAN}]${PR_USER_OP} '
+PS2=$'%_>'
+}
+setprompt
+
+# Make CTRL-S work in vim
+stty -ixon
+
+set iskeyword-=_
+
+export PATH=$PATH:$HOME/.local/bin
+
+# Plugins
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-you-should-use/you-should-use.plugin.zsh
+
+function zle-line-init zle-keymap-select {
+  case $KEYMAP in
+    vicmd) print -rn -- $terminfo[cvvis];; # block cursor
+    viins|main) print -rn -- $terminfo[cnorm];; # less visible cursor
+  esac
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
