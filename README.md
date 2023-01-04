@@ -1,7 +1,11 @@
 # Dotfiles
 
 ## Requirements
+
 ### Fonts
-TODO
+- DejaVuSansMono Nerd Font Mono
+
 ### ZSH Plugins
-TODO
+- zsh-syntax-highlighting.zsh
+- zsh-autosuggestions.zsh
+- you-should-use.plugin.zsh
