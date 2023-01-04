@@ -3,11 +3,10 @@ set -g prefix ^A
 set -g prefix2 ^A
 bind a send-prefix
 
-# Use Alt-vim keys without prefix key to switch panes
-bind -n M-h select-pane -L
-bind -n M-j select-pane -D 
-bind -n M-k select-pane -U
-bind -n M-l select-pane -R
+bind -n M-k if "[ $(tmux display -p '#{pane_current_command}') = nvim ]" "send-keys M-k" "select-pane -U"
+bind -n M-j if "[ $(tmux display -p '#{pane_current_command}') = nvim ]" "send-keys M-j" "select-pane -D"
+bind -n M-h if "[ $(tmux display -p '#{pane_current_command}') = nvim ]" "send-keys M-h" "select-pane -L"
+bind -n M-l if "[ $(tmux display -p '#{pane_current_command}') = nvim ]" "send-keys M-l" "select-pane -R"
 
 bind-key -n M-v  split-window -h -c "#{pane_current_path}"
 bind-key -n M-m  split-window -v -c "#{pane_current_path}"
