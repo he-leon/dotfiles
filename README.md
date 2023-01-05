@@ -1,6 +1,11 @@
 # Dotfiles
 
 ## Requirements
+### Environment
+- ZSH
+- Byobu (Tmux)
+- Xfce
+- neovim
 
 ### Fonts
 - DejaVuSansMono Nerd Font Mono
