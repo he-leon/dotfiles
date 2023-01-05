@@ -78,9 +78,12 @@ bindkey "\eOF" end-of-line
 #------------------------------
 # Alias stuff
 #------------------------------
-alias v="TERM='' nvim && clear"
-alias vi="TERM='' nvim && clear"
-alias vim="TERM='' nvim && clear"
+exec_vim() {
+        TERM='' nvim "$@" && clear
+}
+alias v="exec_vim"
+alias vi="exec_vim"
+alias vim="exec_vim"
 alias h="htop"
 alias ls="ls --color -F"
 alias ll="ls --color -lh"
