@@ -60,6 +60,14 @@ zle -N down-line-or-beginning-search
 bindkey '^[OA' history-beginning-search-backward
 bindkey '^[OB' history-beginning-search-forward
 
+## Yank to system clipboard with y in vi-mode 
+x-yank() {
+    zle vi-yank-whole-line
+    print -rn -- $CUTBUFFER | xclip -sel clip
+}
+zle -N x-yank
+bindkey -M vicmd "yy" x-yank
+
 ## for rxvt
 bindkey "^[[F" end-of-line
 bindkey "^[[H" beginning-of-line
