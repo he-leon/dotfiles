@@ -79,7 +79,7 @@ bindkey "\eOF" end-of-line
 # Alias stuff
 #------------------------------
 exec_vim() {
-        TERM='' nvim "$@" && clear
+            TERM='tmux-256color' nvim "$@" && clear
 }
 alias v="exec_vim"
 alias vi="exec_vim"
