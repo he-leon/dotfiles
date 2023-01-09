@@ -1,3 +1,5 @@
+source ~/.zplug/init.zsh
+
 setopt autocd              # change directory just by typing its name
 #setopt correct            # auto correct mistakes
 setopt interactivecomments # allow comments in interactive mode
@@ -210,9 +212,11 @@ set iskeyword-=_
 export PATH=$PATH:$HOME/.local/bin
 
 # Plugins
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-you-should-use/you-should-use.plugin.zsh
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "MichaelAquilina/zsh-you-should-use"
+zplug load
+
 
 function zle-line-init zle-keymap-select {
   case $KEYMAP in
