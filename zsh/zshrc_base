@@ -1,5 +1,3 @@
-source ~/.zplug/init.zsh
-
 setopt autocd              # change directory just by typing its name
 #setopt correct            # auto correct mistakes
 setopt interactivecomments # allow comments in interactive mode
@@ -212,11 +210,15 @@ set iskeyword-=_
 
 export PATH=$PATH:$HOME/.local/bin
 
-# Plugins
-zplug "zsh-users/zsh-syntax-highlighting"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "MichaelAquilina/zsh-you-should-use"
-zplug load
+## Plugins
+source ${ZDOTDIR:-~}/.antidote/antidote.zsh
+antidote load
+# Use this function to install the defined plugins
+function install_zsh_plugins() {
+    antidote install MichaelAquilina/zsh-you-should-use
+    antidote install zsh-users/zsh-autosuggestions
+    antidote install zsh-users/zsh-syntax-highlighting
+}
 
 
 function zle-line-init zle-keymap-select {
