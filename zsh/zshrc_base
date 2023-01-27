@@ -38,6 +38,8 @@ exit_zsh() { exit }
 zle -N exit_zsh
 bindkey 'qq' exit_zsh
 bindkey -s 'vv' 'vim'
+bindkey -s 'bb' 'byobu'
+bindkey -s 'bn' 'byobu new'
 bindkey 'rr' clear-screen 
 typeset -g -A key
 bindkey "Ħ" backward-word
