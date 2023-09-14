@@ -90,6 +90,10 @@ alias vim="exec_vim"
 alias h="htop"
 alias ls="ls --color -F"
 alias ll="ls --color -lh"
+# Start docker environments
+alias dbuster="docker run -v $(pwd):/workspace -w "/workspace" -it debian:buster bash"
+alias dfocal="docker run -v $(pwd):/workspace -w "/workspace" -it ubuntu:focal bash"
+alias djammy="docker run -v $(pwd):/workspace -w "/workspace" -it ubuntu:jammy bash"
 # systemctl stuff
 alias sstop="sudo systemctl stop"
 alias sstart="sudo systemctl start"
