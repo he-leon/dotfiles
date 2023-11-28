@@ -1,3 +1,4 @@
+#zmodload zsh/zprof
 setopt autocd              # change directory just by typing its name
 #setopt correct            # auto correct mistakes
 setopt interactivecomments # allow comments in interactive mode
@@ -84,6 +85,9 @@ bindkey "\eOF" end-of-line
 exec_vim() {
             TERM='tmux-256color' nvim "$@" && clear
 }
+drun() {
+    docker run -v $(pwd):/workspace -w "/workspace" -it "$@" bash
+}
 alias v="exec_vim"
 alias vi="exec_vim"
 alias vim="exec_vim"
@@ -94,6 +98,7 @@ alias ll="ls --color -lh"
 alias dbuster="docker run -v $(pwd):/workspace -w "/workspace" -it debian:buster bash"
 alias dfocal="docker run -v $(pwd):/workspace -w "/workspace" -it ubuntu:focal bash"
 alias djammy="docker run -v $(pwd):/workspace -w "/workspace" -it ubuntu:jammy bash"
+alias drun="drun"
 # systemctl stuff
 alias sstop="sudo systemctl stop"
 alias sstart="sudo systemctl start"
@@ -117,6 +122,7 @@ alias gdiff="git diff"
 #------------------------------
 # Comp stuff
 #------------------------------
+
 zmodload zsh/complist
 autoload -Uz compinit
 zstyle ':completion:*:*:*:*:*' menu select
@@ -244,3 +250,4 @@ for m in visual viopp; do
         bindkey -M $m $c select-quoted
     done
 done
+ 
