@@ -96,6 +96,7 @@ alias ls="ls --color -F"
 alias ll="ls --color -lh"
 # Start docker environments
 alias dbuster="docker run -v $(pwd):/workspace -w "/workspace" -it debian:buster bash"
+alias dbullseye="docker run -v $(pwd):/workspace -w "/workspace" -it debian:bullseye bash"
 alias dfocal="docker run -v $(pwd):/workspace -w "/workspace" -it ubuntu:focal bash"
 alias djammy="docker run -v $(pwd):/workspace -w "/workspace" -it ubuntu:jammy bash"
 alias drun="drun"
