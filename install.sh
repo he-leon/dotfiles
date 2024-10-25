@@ -3,6 +3,7 @@
 # zsh
 ln -sf $PWD/zsh/zshrc $HOME/.zshrc
 ln -sf $PWD/zsh/zshrc_base $HOME/.zshrc_base
+ln -sf $PWD/zsh/custom_functions.sh $HOME/.custom_functions.sh
 # nvim
 ln -sf $PWD/nvim -t $HOME/.config/
 # X

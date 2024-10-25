@@ -19,7 +19,7 @@ xterm*toolBar:            false
 xterm*selectToClipboard: true
 xterm.*backarrowKey: false
 xterm*metaSendsEscape: true
-xterm*faceName: DejaVuSansM Nerd Font Mono
+xterm*faceName: DejaVuSansM Nerd Font Mono 
 xterm*faceSize: 9
 xterm*renderFont: true
 

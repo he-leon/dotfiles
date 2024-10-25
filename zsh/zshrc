@@ -2,3 +2,8 @@ source $HOME/.zshrc_base
 if [ -f "$HOME/.zshrc_custom" ] ; then
     source $HOME/.zshrc_custom
 fi
+
+if [ -f "$HOME/.custom_functions.sh" ] ; then
+    source $HOME/.custom_functions.sh
+fi
+

@@ -88,6 +88,7 @@ exec_vim() {
 drun() {
     docker run -v $(pwd):/workspace -w "/workspace" -it "$@" bash
 }
+alias xc="xclip -sel clipboard"
 alias v="exec_vim"
 alias vi="exec_vim"
 alias vim="exec_vim"
